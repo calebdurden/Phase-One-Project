@@ -1,6 +1,7 @@
 const randomDogImage = document.getElementById("randomDogImage");
 const randomDogButton = document.getElementById('random-btn');
 const dogBreedDropdown = document.getElementById('drop-btn');
+const imageGrid = document.getElementById("img-container");
 
 function getRandomImage(){
   const randomDog = "https://dog.ceo/api/breeds/image/random";
@@ -36,7 +37,38 @@ function dropDownList(breeds){
   })
 }
 
+function imagesByBreeds(event){
+  // console.log(event.target.options[event.target.selectedIndex].text)
+  let specificBreed = event.target.options[event.target.selectedIndex].text
+  const breedImages = `https://dog.ceo/api/breed/${specificBreed}/images`
+
+  fetch(breedImages)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    dogImageGrid(data)
+  })
+}
+
+function dogImageGrid(data){
+  let imageList = data.message
+  imageGrid.innerHTML = ""
+
+  imageList.forEach(image => {
+    let gridItem = document.createElement('img')
+    gridItem.setAttribute('src', `${image}`)
+    gridItem.setAttribute('class', "gridItem")
+    // imageGrid.innerHTML += `<img class="gridItem" src="${image}"></img>`;
+    imageGrid.append(gridItem)
+    //const gridItem = document.querySelector('.gridItem')
+
+    gridItem.addEventListener('dblclick', () => {
+      gridItem.classList.toggle('large')
+    })
+  })
+}
+
 getBreedList()
 
 randomDogButton.addEventListener('click', getRandomImage)
-dogBreedDropdown.addEventListener('onchange', getBreedList)
+dogBreedDropdown.addEventListener('change', imagesByBreeds)

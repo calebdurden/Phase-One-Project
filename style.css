@@ -1,4 +1,20 @@
-#randomDogImage{
-    width: 400px;
-    height: 400px;
+#img-container{
+    padding-left: 10px;
+    width: 100%;
+    min-width: 75px;
+    text-align: center;
+  }
+  
+.gridItem{
+    width: 200px;
+    height: 200px;
+    margin-left: 1%;
+    margin-top: 1%;
+    display: inline-block;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .large {
+    transform: scale(2);
   }
